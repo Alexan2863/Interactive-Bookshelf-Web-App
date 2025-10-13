@@ -1,0 +1,51 @@
+{% extends 'bookshelf/base.html' %}
+
+{% block title %}All Books - Bookshelf{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid #3498db;
+    }
+
+    .page-header h1 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+    }
+
+    .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .no-books {
+        text-align: center;
+        padding: 3rem;
+        color: #7f8c8d;
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>All Books</h1>
+    <p>Browse our collection of {{ books.count }} book{{ books.count|pluralize }}</p>
+</div>
+
+{% if books %}
+<div class="books-grid">
+    {% for book in books %}
+        {% include 'bookshelf/includes/book_card.html' %}
+    {% endfor %}
+</div>
+{% else %}
+<div class="no-books">
+    <p>No books available yet. Add some through the <a href="/admin/">admin panel</a>!</p>
+</div>
+{% endif %}
+{% endblock %}

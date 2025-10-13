@@ -1,0 +1,93 @@
+{% extends 'bookshelf/base.html' %}
+
+{% block title %}{{ author.name }} - Bookshelf{% endblock %}
+
+{% block extra_css %}
+<style>
+    .author-detail {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .author-detail h1 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .author-bio {
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        line-height: 1.8;
+        color: #34495e;
+    }
+
+    .author-bio h3 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .author-books {
+        margin-top: 2rem;
+    }
+
+    .author-books h2 {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #3498db;
+    }
+
+    .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .no-books {
+        color: #7f8c8d;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'book_list' %}" class="back-link">&larr; Back to all books</a>
+
+<div class="author-detail">
+    <h1>{{ author.name }}</h1>
+
+    <div class="author-bio">
+        <h3>Biography</h3>
+        <p>{{ author.bio }}</p>
+    </div>
+
+    <div class="author-books">
+        <h2>Books by {{ author.name }} ({{ author.books.count }})</h2>
+        {% if author.books.all %}
+        <div class="books-grid">
+            {% for book in author.books.all %}
+                {% include 'bookshelf/includes/book_card.html' %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-books">No books available for this author yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

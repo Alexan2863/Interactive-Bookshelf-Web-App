@@ -1,0 +1,132 @@
+{% extends 'bookshelf/base.html' %}
+
+{% block title %}{{ book.title }} - Bookshelf{% endblock %}
+
+{% block extra_css %}
+<style>
+    .book-detail {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .book-detail h1 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .book-meta {
+        display: flex;
+        gap: 2rem;
+        margin: 1.5rem 0;
+        padding: 1rem 0;
+        border-top: 1px solid #ecf0f1;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .book-meta-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-meta-label {
+        font-weight: bold;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .book-meta-value a {
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    .book-meta-value a:hover {
+        text-decoration: underline;
+    }
+
+    .book-summary {
+        margin: 1.5rem 0;
+        line-height: 1.8;
+        color: #34495e;
+    }
+
+    .genres-section {
+        margin-top: 1.5rem;
+    }
+
+    .genres-section h3 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .genre-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .genre-tag {
+        background-color: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background-color 0.3s;
+    }
+
+    .genre-tag:hover {
+        background-color: #2980b9;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'book_list' %}" class="back-link">&larr; Back to all books</a>
+
+<div class="book-detail">
+    <h1>{{ book.title }}</h1>
+
+    <div class="book-meta">
+        <div class="book-meta-item">
+            <span class="book-meta-label">Author</span>
+            <span class="book-meta-value">
+                <a href="{% url 'author_detail' book.author.slug %}">{{ book.author.name }}</a>
+            </span>
+        </div>
+        <div class="book-meta-item">
+            <span class="book-meta-label">Published</span>
+            <span class="book-meta-value">{{ book.published_date|date:"F j, Y" }}</span>
+        </div>
+    </div>
+
+    <div class="book-summary">
+        <h3>Summary</h3>
+        <p>{{ book.summary }}</p>
+    </div>
+
+    {% if book.genres.all %}
+    <div class="genres-section">
+        <h3>Genres</h3>
+        <div class="genre-tags">
+            {% for genre in book.genres.all %}
+                <a href="{% url 'genre_detail' genre.slug %}" class="genre-tag">{{ genre.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

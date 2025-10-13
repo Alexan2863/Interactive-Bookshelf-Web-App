@@ -1,0 +1,58 @@
+{% extends 'bookshelf/base.html' %} {% block title %}Page Not Found -
+Bookshelf{% endblock %} {% block extra_css %}
+<style>
+  .error-container {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .error-code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: #3498db;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .error-message {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 1rem 0;
+  }
+
+  .error-description {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin: 1rem 0 2rem;
+  }
+
+  .home-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #2980b9;
+  }
+
+  .book-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="error-container">
+  <h1 class="error-code">404</h1>
+  <h2 class="error-message">Page Not Found</h2>
+  <p class="error-description">
+    Sorry, the page you're looking for doesn't exist in our bookshelf.
+  </p>
+  <a href="{% url 'book_list' %}" class="home-button">Return to Books</a>
+</div>
+{% endblock %}

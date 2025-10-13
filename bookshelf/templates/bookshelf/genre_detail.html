@@ -1,0 +1,87 @@
+{% extends 'bookshelf/base.html' %}
+
+{% block title %}{{ genre.name }} - Bookshelf{% endblock %}
+
+{% block extra_css %}
+<style>
+    .genre-detail {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .genre-detail h1 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .genre-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid #3498db;
+    }
+
+    .genre-count {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+
+    .genre-books {
+        margin-top: 2rem;
+    }
+
+    .genre-books h2 {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+    }
+
+    .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .no-books {
+        color: #7f8c8d;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'book_list' %}" class="back-link">&larr; Back to all books</a>
+
+<div class="genre-detail">
+    <div class="genre-header">
+        <h1>{{ genre.name }}</h1>
+        <p class="genre-count">{{ genre.books.count }} book{{ genre.books.count|pluralize }} in this genre</p>
+    </div>
+
+    <div class="genre-books">
+        <h2>Books</h2>
+        {% if genre.books.all %}
+        <div class="books-grid">
+            {% for book in genre.books.all %}
+                {% include 'bookshelf/includes/book_card.html' %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-books">No books tagged with this genre yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
