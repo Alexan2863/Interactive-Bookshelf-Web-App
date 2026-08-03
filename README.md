@@ -28,7 +28,10 @@ cd interactive-bookshelf
 2. Open `index.html` in your browser
 
 ## Project Structure
-...
+├── index.html # Main HTML file 
+├── styles.css # Styling and layout 
+├── script.js # JavaScript functionality 
+└── assets/ # Images and other assets
 
 ## Skills Demonstrated
 - HTML5 semantic structure
